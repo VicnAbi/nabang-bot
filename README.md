@@ -1,0 +1,2 @@
+# nabang-bot
+discord bot
