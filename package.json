@@ -1,0 +1,28 @@
+{
+  "name": "nabang-bot",
+  "version": "0.0.1",
+  "main": "bot.js",
+  "repository": "https://github.com/VicnAbi/nabang-bot.git",
+  "author": "VicnAbi <abivicn@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "register": "node register.js",
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "cross-env": "^7.0.3",
+    "discord-api-types": "^0.23.1",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.0"
+  }
+}
