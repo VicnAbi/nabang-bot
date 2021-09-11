@@ -8,6 +8,7 @@ const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN)
 ;(async () => {
     try {
         await rest.put(
+            // Routes.applicationCommands(CONFIG.DISCORD.CLIENT_ID),
             Routes.applicationGuildCommands(
                 CONFIG.DISCORD.CLIENT_ID,
                 CONFIG.DISCORD.GUILD_ID,

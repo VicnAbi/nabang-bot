@@ -18,7 +18,7 @@ module.exports = {
     async chatAtDiscord(message, tags) {
         relayingChannels.forEach(channel => {
             channel.send({
-                content: `:speech_balloon:||${tags.username}|| ${message}`,
+                content: `:speech_balloon:||${tags.username}|| \`${message}\``,
             })
         })
     },
