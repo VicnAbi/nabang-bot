@@ -12,4 +12,8 @@ module.exports = {
         TOKEN: process.env.TWITCH_BOT_TOKEN,
         CHANNEL: process.env.TWITCH_TARGET_CHANNEL,
     },
+    YOUTUBE: {
+        API_KEY: process.env.YOUTUBE_API_KEY,
+        CHANNEL: process.env.YOUTUBE_TARGET_CHANNEL,
+    },
 }

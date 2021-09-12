@@ -15,10 +15,10 @@ module.exports = {
             await interaction.reply('start tl relay.')
         }
     },
-    async chatAtDiscord(message, tags) {
+    async chatAtDiscord(message, username) {
         relayingChannels.forEach(channel => {
             channel.send({
-                content: `:speech_balloon:||${tags.username}|| \`${message}\``,
+                content: `:speech_balloon:||${username}|| \`${message}\``,
             })
         })
     },

@@ -8,7 +8,7 @@ const client = new tmi.Client({
 client.on('message', (channel, tags, message, self) => {
     if (self) return
     if (/^\[(en|EN)\].*/.test(message.trim())) {
-        chatAtDiscord(message, tags)
+        chatAtDiscord(message, tags.username)
     }
 })
 
