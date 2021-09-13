@@ -47,7 +47,7 @@ async function check(interaction, url, beforeStatus, count) {
     } else {
         clear(
             interaction,
-            `<@${userId}> The service was terminated because there was no change in condition for an hour.`,
+            `<@${userId}> No issues detected for an hour. Terminating service.`,
         )
     }
 }
@@ -60,7 +60,7 @@ module.exports = {
         const userId = interaction.user.id
 
         // clear
-        clear(interaction, `<@${userId}> Observe service has been terminated`)
+        clear(interaction, `<@${userId}> Observation service has been terminated.`)
 
         if (!url) {
             await interaction.reply('Please write url to restart')
@@ -74,7 +74,7 @@ module.exports = {
         }
         const newUrl = `https://m.youtube.com/watch?v=${matched[1]}`
         try {
-            await interaction.reply(`Start observe ${url}`)
+            await interaction.reply(`Start observation of ${url}`)
             check(interaction, newUrl)
         } catch (e) {
             await interaction.reply('Request error')
