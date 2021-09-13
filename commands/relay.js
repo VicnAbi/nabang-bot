@@ -8,11 +8,11 @@ module.exports = {
         if (sw) {
             // stop
             relayingChannels.delete(channel)
-            await interaction.reply('tl relay has stopped.')
+            await interaction.reply('tl relay has stopped')
         } else {
             // start
             relayingChannels.add(channel)
-            await interaction.reply('start tl relay.')
+            await interaction.reply('start tl relay')
         }
     },
     async chatAtDiscord(message, username) {

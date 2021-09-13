@@ -17,6 +17,13 @@ const register = [
         .addStringOption(option =>
             option.setName('input').setDescription('text to uwu'),
         ),
+    // comment
+    new SlashCommandBuilder()
+        .setName('comment')
+        .setDescription('Observe Youtube comments')
+        .addStringOption(option =>
+            option.setName('url').setDescription('youtube url'),
+        ),
 ].map(command => command.toJSON())
 
 module.exports = {
@@ -24,4 +31,5 @@ module.exports = {
     status: require('./status'),
     relay: require('./relay'),
     uwu: require('./uwu'),
+    comment: require('./comment'),
 }

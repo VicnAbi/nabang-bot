@@ -16,6 +16,7 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return
 
     const { commandName } = interaction
+    console.log(commandName, interaction.user.username)
 
     if (commands[commandName]) {
         commands[commandName].run(interaction)
