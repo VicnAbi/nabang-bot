@@ -13,7 +13,7 @@ discord bot
 `/relay switch:stop`
 
 ## /comment
-`/comment` Clear the observe service  
+`/comment` Kill the observation service  
 `/comment url:youtubeUrl`  
-Start the observe service. If the comments are locked, a mention will come.  
+Start a observation service. If the comments are locked, a mention will come.  
 If there is no change of condition for an hour, it will end automatically.

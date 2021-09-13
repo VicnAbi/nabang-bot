@@ -16,7 +16,11 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return
 
     const { commandName } = interaction
-    console.log(commandName, interaction.user.username)
+    console.log(
+        `${interaction.createdAt.toLocaleString()} | ${
+            interaction.user.username
+        } | ${commandName}`,
+    )
 
     if (commands[commandName]) {
         commands[commandName].run(interaction)
