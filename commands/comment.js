@@ -60,7 +60,10 @@ module.exports = {
         const userId = interaction.user.id
 
         // clear
-        clear(interaction, `<@${userId}> Observation service has been terminated.`)
+        clear(
+            interaction,
+            `<@${userId}> Observation service has been terminated.`,
+        )
 
         if (!url) {
             await interaction.reply('Please write url to restart')

@@ -24,6 +24,29 @@ const register = [
         .addStringOption(option =>
             option.setName('url').setDescription('youtube url'),
         ),
+    // vtt
+    new SlashCommandBuilder()
+        .setName('vtt')
+        .setDescription('Save TLs to .vtt')
+        .addStringOption(option =>
+            option
+                .setName('start')
+                .setDescription('start chatId')
+                .setRequired(true),
+        )
+        .addStringOption(option =>
+            option
+                .setName('end')
+                .setDescription('end chatId')
+                .setRequired(true),
+        )
+        .addNumberOption(option =>
+            option
+                .setName('padding')
+                .setDescription(
+                    'The difference between the beginning of the stream and the first TL (secoends)',
+                ),
+        ),
 ].map(command => command.toJSON())
 
 module.exports = {
@@ -32,4 +55,5 @@ module.exports = {
     relay: require('./relay'),
     uwu: require('./uwu'),
     comment: require('./comment'),
+    vtt: require('./vtt'),
 }

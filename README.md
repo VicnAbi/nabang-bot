@@ -9,8 +9,15 @@ discord bot
 `/uwu input:text` [lr] to w
 
 ## /relay
-`/relay` Brings out the translation of real-time chats from nabinya Twitch  
+`/relay` Brings out the translation of real-time chats from nabinya Twitch.  
 `/relay switch:stop`
+
+## /vtt
+`/vtt start:messageId end:messageId`  
+Generate a vtt file from chat history.  
+You must be enabled discord developer mode to see the id of the message.  
+`/vtt padding:1`  
+The difference seconds between the video start time and the first chat time.
 
 ## /comment
 `/comment` Kill the observation service  
