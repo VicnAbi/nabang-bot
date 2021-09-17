@@ -7,18 +7,14 @@ const client = new tmi.Client({
 })
 client.on('message', (channel, tags, message, self) => {
     if (self) return
-    if (/^\[(en|EN)\].*/.test(message.trim())) {
+    if (/^\[en\].*/i.test(message.trim())) {
         chatAtDiscord(message, tags.username)
     }
 })
 
 module.exports = {
     async connect() {
-        try {
-            await client.connect()
-            console.log('twitch connected')
-        } catch (e) {
-            console.error(e)
-        }
+        await client.connect()
+        console.log('twitch connected')
     },
 }

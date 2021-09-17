@@ -14,6 +14,6 @@ module.exports = {
     },
     YOUTUBE: {
         API_KEY: process.env.YOUTUBE_API_KEY,
-        CHANNEL: process.env.YOUTUBE_TARGET_CHANNEL,
+        TARGET: process.env.YOUTUBE_TARGET,
     },
 }
