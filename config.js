@@ -16,4 +16,7 @@ module.exports = {
         API_KEY: process.env.YOUTUBE_API_KEY,
         TARGET: process.env.YOUTUBE_TARGET,
     },
+    HOLODEX: {
+        API_KEY: process.env.HOLODEX_API_KEY,
+    },
 }

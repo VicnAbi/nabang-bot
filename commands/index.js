@@ -10,6 +10,13 @@ const register = [
         .addStringOption(option =>
             option.setName('switch').setDescription('On/Off switch'),
         ),
+    // clips
+    new SlashCommandBuilder()
+        .setName('clips')
+        .setDescription('Brings out the new clips.')
+        .addStringOption(option =>
+            option.setName('switch').setDescription('On/Off switch'),
+        ),
     // uwu
     new SlashCommandBuilder()
         .setName('uwu')
@@ -53,6 +60,7 @@ module.exports = {
     register,
     status: require('./status'),
     relay: require('./relay'),
+    clips: require('./clips'),
     uwu: require('./uwu'),
     comment: require('./comment'),
     vtt: require('./vtt'),
