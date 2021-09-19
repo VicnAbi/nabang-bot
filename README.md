@@ -8,15 +8,15 @@ discord bot
 `/uwu` UwU  
 `/uwu input:text` [lr] to w
 
-## /relay
-`/relay` Brings out the translation of real-time chats from nabinya Twitch.  
-`/relay switch:stop`
+## /tl relay
+`/tl relay` Brings out the translation of real-time chats from nabinya Twitch.  
+`/tl relay switch:stop`
 
-## /vtt
-`/vtt start:messageId end:messageId`  
-Generate a vtt file from chat history.  
+## /tl log
+`/tl log start:messageId end:messageId`  
+Generate a txt file from chat history.  
 You must be enabled discord developer mode to see the id of the message.  
-`/vtt padding:1`  
+`/tl log padding:1`  
 The difference seconds between the video start time and the first chat time.
 
 ## /comment

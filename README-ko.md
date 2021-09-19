@@ -7,15 +7,15 @@
 `/uwu` UwU  
 `/uwu input:text` [lr]을 w로 바꿔줍니다.
 
-## /relay
-`/relay` nabinya 트위치 채널에서 영어 번역을 가져옵니다.  
-`/relay switch:stop`
+## /tl relay
+`/tl relay` nabinya 트위치 채널에서 영어 번역을 가져옵니다.  
+`/tl relay switch:stop`
 
-## /vtt
-`/vtt start:messageId end:messageId`  
-채팅 기록으로 vtt파일을 생성합니다.  
+## /tl log
+`/tl log start:messageId end:messageId`  
+채팅 기록으로 txt파일을 생성합니다.  
 메세지ID를 보려면 디스코드 개발자모드를 켜야 합니다.  
-`/vtt padding:1`  
+`/tl log padding:1`  
 비디오 시작시간과 첫 채팅과의 차이(초)를 설정합니다.
 
 ## /comment

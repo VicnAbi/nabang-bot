@@ -2,6 +2,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 module.exports = {
+    ENV: process.env.NODE_ENV,
+    MASTER_ID: process.env.MASTER_ID,
     DISCORD: {
         TOKEN: process.env.DISCORD_BOT_TOKEN,
         CLIENT_ID: process.env.DISCORD_BOT_CLIENT_ID,

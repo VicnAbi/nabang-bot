@@ -18,7 +18,7 @@ module.exports = {
     async chatAtDiscord(message, username) {
         relayingTlChannels.forEach(channel => {
             channel.send({
-                content: `:speech_balloon:||${username}|| \`${message}\``,
+                content: `:speech_balloon:||${username}:|| \`${message}\``,
             })
         })
     },

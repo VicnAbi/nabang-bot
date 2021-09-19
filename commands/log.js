@@ -3,9 +3,27 @@ const {
     MessageActionRow,
     MessageButton,
 } = require('discord.js')
-const messagesToVtt = require('../services/vtt')
 
 const maxTryCount = 10
+
+/**
+ * unix timestamp to format
+ * @param {Number} timestamp
+ * @returns
+ */
+function timeFormat(timestamp) {
+    let s = Math.floor(timestamp / 1000)
+    let m = Math.floor(s / 60)
+    let h = Math.floor(m / 60)
+
+    s = s % 60
+    m = m % 60
+    s = (s < 10 ? '0' : '') + s
+    m = (m < 10 ? '0' : '') + m
+    h = (h < 10 ? '0' : '') + h
+
+    return `${h}:${m}:${s}`
+}
 
 /**
  * fetch message data to obj
@@ -15,6 +33,7 @@ const maxTryCount = 10
 function dataToMsg(m) {
     return {
         time: m.createdTimestamp,
+        tlr: m.content.replace(/^.*\|\|(.*)\|\|.*$/, '$1').replace(':', ''),
         content: m.content
             .replace(/^.*\[(en)\]/i, '')
             .trim()
@@ -60,7 +79,7 @@ module.exports = {
                 .setURL(startLink),
         )
         interaction.reply({
-            content: 'start collecting messages',
+            content: 'create a log file',
             components: [row],
         })
 
@@ -71,10 +90,13 @@ module.exports = {
             ].sort((a, b) => {
                 return a.time - b.time
             })
-            const vtt = messagesToVtt(startLink, messages, padding)
-            const fileName = new Date().toDateString() + '.vtt'
+            const txt = messages.reduce((s, m) => {
+                const time = m.time - messages[0].time + padding * 1000
+                return s + `${timeFormat(time)} (${m.tlr}) ${m.content}\n`
+            }, '')
+            const fileName = new Date(messages[0].time).toDateString() + '.txt'
             const attachment = new MessageAttachment(
-                Buffer.from(vtt, 'utf-8'),
+                Buffer.from(txt, 'utf-8'),
                 fileName,
             )
             await channel.send({ files: [attachment] })

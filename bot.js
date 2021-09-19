@@ -6,9 +6,12 @@ const youtube = require('./services/youtube')
 const { relayingTlChannels } = require('./commands/relay')
 const { relayingClipChannels, clipScheduler } = require('./commands/clips')
 
+const DEV_MODE = CONFIG.ENV === 'develop'
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 
 client.once('ready', async () => {
+    if (DEV_MODE) return
     try {
         // await youtube.connect()
         await twitch.connect()
@@ -27,6 +30,7 @@ client.once('ready', async () => {
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return
+    if (DEV_MODE && CONFIG.MASTER_ID != interaction.user.id) return
 
     const { commandName } = interaction
     console.log(
