@@ -33,7 +33,11 @@ async function check(interaction, url, beforeStatus, count) {
     if (beforeStatus !== isOpen) {
         count = 0
         const status = isOpen ? '🟢 Comments are OK' : '🚫 Comments are locked'
-        await interaction.channel.send(`<@${userId}> ${status}`)
+        try {
+            await interaction.channel.send(`<@${userId}> ${status}`)
+        } catch (e) {
+            console.error(e)
+        }
     }
     // next
     if (count < maxTryCount) {

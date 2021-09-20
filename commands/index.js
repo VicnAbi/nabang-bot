@@ -69,6 +69,7 @@ const register = [
 
 module.exports = {
     register,
+    test: require('./test'),
     status: require('./status'),
     clips: require('./clips'),
     uwu: require('./uwu'),
