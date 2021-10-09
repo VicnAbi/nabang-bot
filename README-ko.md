@@ -23,3 +23,11 @@
 `/comment url:youtubeUrl`  
 유튜브 덧글 상태 감시를 시작합니다. 댓글 상태가 바뀌면 멘션이 옵니다.  
 한 시간 동안 변동이 없으면 자동으로 종료됩니다.
+
+## /reaction
+`/reaction channel:channelId start:messageId end:messageId`  
+채팅 기록으로 리액션이 많은 순서대로 정리합니다.  
+`/reaction padding:1`  
+비디오 시작시간과 첫 채팅과의 차이(초)를 설정합니다.  
+`/reaction url:videoSrc`  
+링크가 빠졌을 경우 타임스탬프 링크는 메세지로 이동합니다.

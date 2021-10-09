@@ -32,9 +32,7 @@ client.on('interactionCreate', async interaction => {
 
     const { commandName } = interaction
     console.log(
-        `${interaction.createdAt.toLocaleString()} | ${
-            interaction.user.username
-        } | ${commandName}`,
+        `${interaction.user.id} | ${interaction.user.username} | ${commandName}`,
     )
 
     if (commands[commandName]) {

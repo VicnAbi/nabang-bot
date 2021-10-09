@@ -25,6 +25,38 @@ const register = [
         .addStringOption(option =>
             option.setName('url').setDescription('youtube url'),
         ),
+    // reaction
+    new SlashCommandBuilder()
+        .setName('reaction')
+        .setDescription('Summarize the TLs that received reactions')
+        .addStringOption(option =>
+            option
+                .setName('channel')
+                .setDescription('stream chat channelId')
+                .setRequired(true),
+        )
+        .addStringOption(option =>
+            option
+                .setName('start')
+                .setDescription('start chatId')
+                .setRequired(true),
+        )
+        .addStringOption(option =>
+            option
+                .setName('end')
+                .setDescription('end chatId')
+                .setRequired(true),
+        )
+        .addNumberOption(option =>
+            option
+                .setName('padding')
+                .setDescription(
+                    'The difference between the beginning of the stream and the first TL (secoends)',
+                ),
+        )
+        .addStringOption(option =>
+            option.setName('url').setDescription('Video link'),
+        ),
     // tl
     new SlashCommandBuilder()
         .setName('tl')
@@ -72,4 +104,5 @@ module.exports = {
     uwu: require('./uwu'),
     comment: require('./comment'),
     tl: require('./tl'),
+    reaction: require('./reaction'),
 }

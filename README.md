@@ -24,3 +24,11 @@ The difference seconds between the video start time and the first chat time.
 `/comment url:youtubeUrl`  
 Start a observation service. If the comments are locked, a mention will come.  
 If there is no change of condition for an hour, it will end automatically.
+
+## /reaction
+`/reaction channel:channelId start:messageId end:messageId`  
+Organize it in the order of reactions.  
+`/reaction padding:1`  
+The difference seconds between the video start time and the first chat time.  
+`/reaction url:videoSrc`  
+If this parameter is missing, the timestamp link goes to the message.

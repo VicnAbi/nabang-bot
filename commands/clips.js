@@ -37,7 +37,8 @@ async function clipScheduler() {
         }
         before = data
     } catch (e) {
-        console.error(e)
+        console.error('clip load fail')
+        // console.error(e)
     }
     setTimeout(clipScheduler, interval)
 }
