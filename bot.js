@@ -1,5 +1,5 @@
 const CONFIG = require('./config')
-const { Client, Intents } = require('discord.js')
+const client = require('./services/client')
 const commands = require('./commands')
 const twitch = require('./services/twitch')
 const youtube = require('./services/youtube')
@@ -7,8 +7,6 @@ const { relayingTlChannels } = require('./commands/relay')
 const { relayingClipChannels, clipScheduler } = require('./commands/clips')
 
 const DEV_MODE = CONFIG.ENV === 'develop'
-
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 
 client.once('ready', async () => {
     if (DEV_MODE) return

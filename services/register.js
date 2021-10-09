@@ -9,9 +9,9 @@ const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN)
 ;(async () => {
     try {
         if (DEV_MODE) {
-            const test = {
-                name: 'test',
-                description: 'test',
+            const status = {
+                name: 'status',
+                description: 'status',
             }
             await rest.put(
                 Routes.applicationGuildCommands(
@@ -19,7 +19,7 @@ const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN)
                     CONFIG.DISCORD.GUILD_ID,
                 ),
                 {
-                    body: [...register, test],
+                    body: [...register, status],
                 },
             )
         } else {

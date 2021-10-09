@@ -4,8 +4,6 @@ const {
 } = require('@discordjs/builders')
 
 const register = [
-    // status
-    new SlashCommandBuilder().setName('status').setDescription('Bot status'),
     // clips
     new SlashCommandBuilder()
         .setName('clips')
@@ -69,7 +67,6 @@ const register = [
 
 module.exports = {
     register,
-    test: require('./test'),
     status: require('./status'),
     clips: require('./clips'),
     uwu: require('./uwu'),
