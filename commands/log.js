@@ -4,7 +4,7 @@ const {
     MessageButton,
 } = require('discord.js')
 
-const maxTryCount = 10
+const maxTryCount = 50
 
 /**
  * unix timestamp to format

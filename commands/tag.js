@@ -30,34 +30,21 @@ function timeFormat(timestamp) {
  * @returns
  */
 function dataToMsg(m) {
+    const content = m.content
+        .replace(/^.*\[(en|ko|kr)\]/i, '')
+        .trim()
+        .replace(/`$/, '')
+    const isTL = /^(💬|:speech_balloon:)/.test(m.content)
     return {
         id: m.id,
-        isTL: /^(💬|:speech_balloon:)/.test(m.content),
+        isTL,
+        hasStar: (isTL && m.reactions.cache.has('⭐')) || /^⭐/.test(m.content),
         time: m.createdTimestamp,
-        reactions: m.reactions.cache,
-        content: m.content
-            .replace(/^.*\[(en|ko|kr)\]/i, '')
-            .trim()
-            .replace(/`$/, ''),
+        content: content
+            .replace(/^(⭐|💬|:speech_balloon:)/, '')
+            .replace(/^\|\|.*\|\|/, '')
+            .trim(),
     }
-}
-
-/**
- * analyze emoji
- * @param {Message} m
- * @returns
- */
-function analyzeEmoji(m) {
-    let text = ''
-    let count = 0
-    m.reactions
-        .filter(r => r.emoji.name !== '⭐')
-        .forEach(r => {
-            text += `<:${r.emoji.name}:${r.emoji.id}>`
-            count = count > r.count ? count : r.count
-        })
-    m.reactions = { text, count }
-    return m
 }
 
 /**
@@ -102,37 +89,30 @@ module.exports = {
                     .setURL(startLink),
             )
             interaction.reply({
-                content: `Summarize reactions\n${url}`,
+                content: `Generate tags\n${url}`,
                 components: [row],
             })
 
-            const tlMessages = [
+            const messages = [
                 dataToMsg(await channel.messages.fetch(end)),
                 ...(await recursiveFetch(channel.messages, end, start)),
-            ]
-                .filter(m => m.isTL)
-                .sort((a, b) => {
-                    return a.time - b.time
-                })
-            const firstTime = tlMessages[0].time
-            const messages = tlMessages
-                .map(m => {
-                    m.time = m.time - firstTime + padding * 1000
-                    return analyzeEmoji(m)
-                })
-                .filter(m => m.reactions.count > 1)
-                .sort((a, b) => {
-                    return b.reactions.count - a.reactions.count
-                })
-
-            const txts = messages.map(m => {
-                const t = timeFormat(m.time)
-                const link =
-                    url === ''
-                        ? `https://discord.com/channels/${guildId}/${channel.id}/${m.id}`
-                        : `${url}?t=${t}`
-                return `${m.content} ${m.reactions.text}(${m.reactions.count}) [${t}](${link})\n`
+            ].sort((a, b) => {
+                return a.time - b.time
             })
+            const firstTime = messages[0].time
+            const txts = messages
+                .filter(m => m.hasStar)
+                .map(m => {
+                    const t = timeFormat(m.time - firstTime + padding * 1000)
+                    const link =
+                        url === ''
+                            ? `https://discord.com/channels/${guildId}/${channel.id}/${m.id}`
+                            : `${url}?t=${t}`
+                    return (
+                        (m.isTL ? '[TL] ' : '') +
+                        `${m.content} [${t}](${link})\n`
+                    )
+                })
 
             for (let i = 0; i < txts.length; i += 10) {
                 const str = txts.slice(i, i + 10).reduce((p, n) => p + n, '')

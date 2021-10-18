@@ -57,6 +57,38 @@ const register = [
         .addStringOption(option =>
             option.setName('url').setDescription('Video link'),
         ),
+    // tag
+    new SlashCommandBuilder()
+        .setName('tag')
+        .setDescription('Generate tag list')
+        .addStringOption(option =>
+            option
+                .setName('channel')
+                .setDescription('stream chat channelId')
+                .setRequired(true),
+        )
+        .addStringOption(option =>
+            option
+                .setName('start')
+                .setDescription('start chatId')
+                .setRequired(true),
+        )
+        .addStringOption(option =>
+            option
+                .setName('end')
+                .setDescription('end chatId')
+                .setRequired(true),
+        )
+        .addNumberOption(option =>
+            option
+                .setName('padding')
+                .setDescription(
+                    'The difference between the beginning of the stream and the first tag (secoends)',
+                ),
+        )
+        .addStringOption(option =>
+            option.setName('url').setDescription('Video link'),
+        ),
     // tl
     new SlashCommandBuilder()
         .setName('tl')
@@ -105,4 +137,5 @@ module.exports = {
     comment: require('./comment'),
     tl: require('./tl'),
     reaction: require('./reaction'),
+    tag: require('./tag'),
 }
