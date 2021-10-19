@@ -121,9 +121,6 @@ module.exports = {
                     return analyzeEmoji(m)
                 })
                 .filter(m => m.reactions.count > 1)
-                .sort((a, b) => {
-                    return b.reactions.count - a.reactions.count
-                })
 
             const txts = messages.map(m => {
                 const t = timeFormat(m.time)
