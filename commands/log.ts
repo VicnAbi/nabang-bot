@@ -1,36 +1,41 @@
-const {
+import {
+    CommandInteraction,
+    Snowflake,
+    Message,
+    MessageManager,
     MessageAttachment,
     MessageActionRow,
     MessageButton,
-} = require('discord.js')
+} from 'discord.js'
 
 const maxTryCount = 50
 
 /**
  * unix timestamp to format
- * @param {Number} timestamp
- * @returns
  */
-function timeFormat(timestamp) {
+function timeFormat(timestamp: number) {
     let s = Math.floor(timestamp / 1000)
     let m = Math.floor(s / 60)
     let h = Math.floor(m / 60)
 
     s = s % 60
     m = m % 60
-    s = (s < 10 ? '0' : '') + s
-    m = (m < 10 ? '0' : '') + m
-    h = (h < 10 ? '0' : '') + h
+    const ss = (s < 10 ? '0' : '') + s
+    const ms = (m < 10 ? '0' : '') + m
+    const hs = (h < 10 ? '0' : '') + h
 
-    return `${h}:${m}:${s}`
+    return `${hs}:${ms}:${ss}`
 }
 
 /**
  * fetch message data to obj
- * @param {Message} m
- * @returns
  */
-function dataToMsg(m) {
+type MsgData = {
+    time: number
+    tlr: string
+    content: string
+}
+function dataToMsg(m: Message) {
     return {
         time: m.createdTimestamp,
         tlr: m.content.replace(/^.*\|\|(.*)\|\|.*$/, '$1').replace(':', ''),
@@ -38,22 +43,22 @@ function dataToMsg(m) {
             .replace(/^.*\[(en)\]/i, '')
             .trim()
             .replace(/`$/, ''),
-    }
+    } as MsgData
 }
 
 /**
  * recursive fetch func
- * @param {Collection<Message>} messages
- * @param {Snowflake} lastId
- * @param {Snowflake} endId
- * @param {Array} result
- * @param {Number} count
- * @returns
  */
-async function recursiveFetch(messages, lastId, endId, result = [], count = 0) {
+async function recursiveFetch(
+    messages: MessageManager,
+    lastId: Snowflake,
+    endId: Snowflake,
+    result: MsgData[] = [],
+    count = 0,
+): Promise<MsgData[]> {
     const data = await messages.fetch({ limit: 100, before: lastId })
 
-    let isEnd = data.some(m => {
+    let isEnd = data.some((m) => {
         result.push(dataToMsg(m))
         return m.id == endId
     })
@@ -61,15 +66,16 @@ async function recursiveFetch(messages, lastId, endId, result = [], count = 0) {
     if (isEnd || count > maxTryCount) {
         return result
     }
-    return recursiveFetch(messages, data.last().id, endId, result, ++count)
+    return recursiveFetch(messages, data.last()!.id, endId, result, ++count)
 }
 
-module.exports = {
-    async run(interaction) {
+export default {
+    async run(interaction: CommandInteraction) {
         const { guildId, channel, options } = interaction
+        if (!channel) return
         const padding = options.getNumber('padding') || 1
-        const start = options.getString('start')
-        const end = options.getString('end')
+        const start = options.getString('start')!
+        const end = options.getString('end')!
 
         const startLink = `https://discord.com/channels/${guildId}/${channel.id}/${start}`
         const row = new MessageActionRow().addComponents(

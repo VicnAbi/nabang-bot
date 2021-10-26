@@ -5,6 +5,6 @@ ENV APP_HOME=/usr/app
 WORKDIR $APP_HOME
 
 COPY . .
-RUN yarn install --production=true
+RUN yarn install --production=false
 
-CMD ["node", "bot"]
+CMD ["yarn", "start"]

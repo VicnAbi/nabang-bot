@@ -1,40 +1,47 @@
-const axios = require('axios')
+import axios from 'axios'
+import { CommandInteraction } from 'discord.js'
 
 const maxTryCount = 60
 const interval = 60 * 1000
 const youtubeIdRegex = /youtu(?:.*\/v\/|.*v=|\.be\/)([A-Za-z0-9_-]{11})/
-const observeServices = new Map()
+
+export const observeServices = new Map()
 
 /**
  * clear user's observe service
- * @param {CommandInteraction} interaction
- * @param {String} text
  */
-async function clear(interaction, text) {
+async function clear(interaction: CommandInteraction, text: string) {
+    const { channel } = interaction
+    if (!channel) return
+
     const userId = interaction.user.id
     clearInterval(observeServices.get(userId))
     if (observeServices.delete(userId)) {
-        await interaction.channel.send(text)
+        await channel.send(text)
     }
 }
 
 /**
  * recursive check function
- * @param {CommandInteraction} interaction
- * @param {String} url
- * @param {Boolean} beforeStatus
- * @param {Number} count
  */
-async function check(interaction, url, beforeStatus, count) {
+async function check(
+    interaction: CommandInteraction,
+    url: string,
+    beforeStatus?: boolean,
+    count: number = 0,
+) {
     const { data } = await axios(url)
     const isOpen = data.includes('comments-section')
     const userId = interaction.user.id
+    const { channel } = interaction
+    if (!channel) return
+
     // changed status alarm
     if (beforeStatus !== isOpen) {
         count = 0
         const status = isOpen ? '🟢 Comments are OK' : '🚫 Comments are locked'
         try {
-            await interaction.channel.send(`<@${userId}> ${status}`)
+            await channel.send(`<@${userId}> ${status}`)
         } catch (e) {
             console.error(e)
         }
@@ -57,8 +64,7 @@ async function check(interaction, url, beforeStatus, count) {
 }
 
 module.exports = {
-    observeServices,
-    async run(interaction) {
+    async run(interaction: CommandInteraction) {
         const { options } = interaction
         const url = options.getString('url')
         const userId = interaction.user.id

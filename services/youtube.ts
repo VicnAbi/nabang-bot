@@ -1,8 +1,8 @@
-const CONFIG = require('../config')
+import CONFIG from '../config'
+import { chatAtDiscord } from '../commands/relay'
 const YouTube = require('youtube-live-chat')
-const { chatAtDiscord } = require('../commands/relay')
 
-module.exports = {
+export default {
     connect() {
         return new Promise((resolve, reject) => {
             const yt = new YouTube(
@@ -13,9 +13,9 @@ module.exports = {
             yt.on('ready', () => {
                 console.log('youtube connected')
                 yt.listen(1000)
-                resolve()
+                resolve(true)
             })
-            yt.on('message', ({ snippet, authorDetails }) => {
+            yt.on('message', ({ snippet, authorDetails }: any) => {
                 const { displayMessage } = snippet
                 const { displayName } = authorDetails
                 if (/^\[(ko|kr)\].*/i.test(displayMessage.trim())) {

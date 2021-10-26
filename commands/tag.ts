@@ -1,14 +1,21 @@
-const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js')
-const client = require('../services/client')
+import {
+    CommandInteraction,
+    Message,
+    MessageManager,
+    MessageActionRow,
+    MessageButton,
+    MessageEmbed,
+    Snowflake,
+    TextBasedChannels,
+} from 'discord.js'
+import client from '../services/client'
 
 const maxTryCount = 50
 
 /**
  * unix timestamp to format
- * @param {Number} timestamp
- * @returns
  */
-function timeFormat(timestamp) {
+function timeFormat(timestamp: number) {
     let s = Math.floor(timestamp / 1000)
     let m = Math.floor(s / 60)
     let h = Math.floor(m / 60)
@@ -26,10 +33,15 @@ function timeFormat(timestamp) {
 
 /**
  * fetch message data to obj
- * @param {Message} m
- * @returns
  */
-function dataToMsg(m) {
+type MsgData = {
+    id: Snowflake
+    isTL: boolean
+    hasStar: boolean
+    time: number
+    content: string
+}
+function dataToMsg(m: Message) {
     const content = m.content
         .replace(/^.*\[(en|ko|kr)\]/i, '')
         .trim()
@@ -44,22 +56,22 @@ function dataToMsg(m) {
             .replace(/^(⭐|💬|:speech_balloon:)/, '')
             .replace(/^\|\|.*\|\|/, '')
             .trim(),
-    }
+    } as MsgData
 }
 
 /**
  * recursive fetch func
- * @param {Collection<Message>} messages
- * @param {Snowflake} lastId
- * @param {Snowflake} endId
- * @param {Array} result
- * @param {Number} count
- * @returns
  */
-async function recursiveFetch(messages, lastId, endId, result = [], count = 0) {
+async function recursiveFetch(
+    messages: MessageManager,
+    lastId: Snowflake,
+    endId: Snowflake,
+    result: MsgData[] = [],
+    count = 0,
+): Promise<MsgData[]> {
     const data = await messages.fetch({ limit: 100, before: lastId })
 
-    let isEnd = data.some(m => {
+    let isEnd = data.some((m) => {
         result.push(dataToMsg(m))
         return m.id == endId
     })
@@ -67,20 +79,22 @@ async function recursiveFetch(messages, lastId, endId, result = [], count = 0) {
     if (isEnd || count > maxTryCount) {
         return result
     }
-    return recursiveFetch(messages, data.last().id, endId, result, ++count)
+    return recursiveFetch(messages, data.last()!.id, endId, result, ++count)
 }
 
-module.exports = {
-    async run(interaction) {
+export default {
+    async run(interaction: CommandInteraction) {
         const { guildId, options } = interaction
-        const channelId = options.getString('channel')
+        const channelId = options.getString('channel')!
         const url = options.getString('url') || ''
         const padding = options.getNumber('padding') || 1
-        const start = options.getString('start')
-        const end = options.getString('end')
+        const start = options.getString('start')!
+        const end = options.getString('end')!
 
         try {
-            const channel = await client.channels.fetch(channelId)
+            const channel = (await client.channels.fetch(
+                channelId,
+            )) as TextBasedChannels
             const startLink = `https://discord.com/channels/${guildId}/${channel.id}/${start}`
             const row = new MessageActionRow().addComponents(
                 new MessageButton()
@@ -101,8 +115,8 @@ module.exports = {
             })
             const firstTime = messages[0].time
             const txts = messages
-                .filter(m => m.hasStar)
-                .map(m => {
+                .filter((m) => m.hasStar)
+                .map((m) => {
                     const t = timeFormat(m.time - firstTime + padding * 1000)
                     const link =
                         url === ''
@@ -117,11 +131,11 @@ module.exports = {
             for (let i = 0; i < txts.length; i += 10) {
                 const str = txts.slice(i, i + 10).reduce((p, n) => p + n, '')
                 const embed = new MessageEmbed().setDescription(str)
-                await interaction.channel.send({ embeds: [embed] })
+                await interaction.channel?.send({ embeds: [embed] })
             }
         } catch (e) {
             console.error(e)
-            await interaction.channel.send('error')
+            await interaction.channel?.send('error')
         }
     },
 }

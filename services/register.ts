@@ -1,10 +1,10 @@
-const CONFIG = require('../config')
-const { REST } = require('@discordjs/rest')
-const { Routes } = require('discord-api-types/v9')
-const { register } = require('../commands')
+import CONFIG from '../config'
+import { REST } from '@discordjs/rest'
+import { Routes } from 'discord-api-types/v9'
+import { register } from '../commands'
 
 const DEV_MODE = CONFIG.ENV === 'develop'
-const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN)
+const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN!)
 
 ;(async () => {
     try {
@@ -15,8 +15,8 @@ const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN)
             }
             await rest.put(
                 Routes.applicationGuildCommands(
-                    CONFIG.DISCORD.CLIENT_ID,
-                    CONFIG.DISCORD.GUILD_ID,
+                    CONFIG.DISCORD.CLIENT_ID!,
+                    CONFIG.DISCORD.GUILD_ID!,
                 ),
                 {
                     body: [...register, status],
@@ -24,7 +24,7 @@ const rest = new REST({ version: '9' }).setToken(CONFIG.DISCORD.TOKEN)
             )
         } else {
             await rest.put(
-                Routes.applicationCommands(CONFIG.DISCORD.CLIENT_ID),
+                Routes.applicationCommands(CONFIG.DISCORD.CLIENT_ID!),
                 {
                     body: register,
                 },

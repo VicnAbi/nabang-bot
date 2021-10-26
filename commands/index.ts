@@ -1,92 +1,118 @@
-const {
+import {
     SlashCommandBuilder,
     SlashCommandSubcommandBuilder,
-} = require('@discordjs/builders')
+} from '@discordjs/builders'
+import { CommandInteraction } from 'discord.js'
 
-const register = [
+export interface Commands {
+    [comm: string]: {
+        run(intr: CommandInteraction): Promise<void>
+    }
+}
+
+import status from './status'
+import uwu from './uwu'
+import tl from './tl'
+import clips from './clips'
+
+export default {
+    status,
+    uwu,
+    tl,
+    clips,
+} as Commands
+
+// clips: import('./clips'),
+// uwu: import('./uwu'),
+// comment: import('./comment'),
+// tl: import('./tl'),
+// reaction: import('./reaction'),
+// tag: import('./tag'),
+
+export const register = [
     // clips
     new SlashCommandBuilder()
         .setName('clips')
         .setDescription('Brings out the new clips.')
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option.setName('switch').setDescription('On/Off switch'),
         ),
     // uwu
     new SlashCommandBuilder()
         .setName('uwu')
         .setDescription('UwU')
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option.setName('input').setDescription('text to uwu'),
         ),
     // comment
     new SlashCommandBuilder()
         .setName('comment')
         .setDescription('Observe Youtube comments')
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option.setName('url').setDescription('youtube url'),
         ),
     // reaction
     new SlashCommandBuilder()
         .setName('reaction')
         .setDescription('Summarize the TLs that received reactions')
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option
                 .setName('channel')
                 .setDescription('stream chat channelId')
                 .setRequired(true),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option
                 .setName('start')
                 .setDescription('start chatId')
                 .setRequired(true),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option
                 .setName('end')
                 .setDescription('end chatId')
                 .setRequired(true),
         )
-        .addNumberOption(option =>
+        .addNumberOption((option) =>
             option
                 .setName('padding')
                 .setDescription(
                     'The difference between the beginning of the stream and the first TL (secoends)',
                 ),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option.setName('url').setDescription('Video link'),
         ),
     // tag
     new SlashCommandBuilder()
         .setName('tag')
         .setDescription('Generate tag list')
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option
                 .setName('channel')
                 .setDescription('stream chat channelId')
                 .setRequired(true),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option
                 .setName('start')
                 .setDescription('start chatId')
                 .setRequired(true),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option
                 .setName('end')
                 .setDescription('end chatId')
                 .setRequired(true),
         )
-        .addNumberOption(option =>
+        .addNumberOption((option) =>
             option
                 .setName('padding')
                 .setDescription(
                     'The difference between the beginning of the stream and the first tag (secoends)',
                 ),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option.setName('url').setDescription('Video link'),
         ),
     // tl
@@ -98,7 +124,7 @@ const register = [
             new SlashCommandSubcommandBuilder()
                 .setName('relay')
                 .setDescription('Brings out the translation of real-time chat.')
-                .addStringOption(option =>
+                .addStringOption((option) =>
                     option.setName('switch').setDescription('On/Off switch'),
                 ),
         )
@@ -107,19 +133,19 @@ const register = [
             new SlashCommandSubcommandBuilder()
                 .setName('log')
                 .setDescription('Save TLs like LunaTL log')
-                .addStringOption(option =>
+                .addStringOption((option) =>
                     option
                         .setName('start')
                         .setDescription('start chatId')
                         .setRequired(true),
                 )
-                .addStringOption(option =>
+                .addStringOption((option) =>
                     option
                         .setName('end')
                         .setDescription('end chatId')
                         .setRequired(true),
                 )
-                .addNumberOption(option =>
+                .addNumberOption((option) =>
                     option
                         .setName('padding')
                         .setDescription(
@@ -127,15 +153,4 @@ const register = [
                         ),
                 ),
         ),
-].map(command => command.toJSON())
-
-module.exports = {
-    register,
-    status: require('./status'),
-    clips: require('./clips'),
-    uwu: require('./uwu'),
-    comment: require('./comment'),
-    tl: require('./tl'),
-    reaction: require('./reaction'),
-    tag: require('./tag'),
-}
+].map((command) => command.toJSON())

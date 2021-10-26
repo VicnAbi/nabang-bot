@@ -1,10 +1,25 @@
-const { api } = require('../services/holodex')
-const { MessageEmbed } = require('discord.js')
+import { api } from '../services/holodex'
+import {
+    CommandInteraction,
+    TextBasedChannels,
+    MessageEmbed,
+    Snowflake,
+} from 'discord.js'
 
-const relayingClipChannels = new Set()
+export const relayingClipChannels = new Set<TextBasedChannels>()
+
 const interval = 3 * 60 * 1000
 
-async function chatAtDiscord({ id, title, channel, lang }) {
+type Clip = {
+    id: Snowflake
+    title: string
+    lang: string
+    channel: {
+        name: string
+        photo: string
+    }
+}
+async function chatAtDiscord({ id, title, channel, lang }: Clip) {
     const embed = new MessageEmbed()
         .setColor('#B03B40')
         .setTitle(title)
@@ -16,13 +31,13 @@ async function chatAtDiscord({ id, title, channel, lang }) {
             'From Holodex clips',
             'https://pbs.twimg.com/profile_images/1374907434523750408/-rlYtfK0_normal.png',
         )
-    relayingClipChannels.forEach(channel => {
+    relayingClipChannels.forEach((channel) => {
         channel.send({ embeds: [embed] })
     })
 }
 
-let before = []
-async function clipScheduler() {
+let before: Clip[] = []
+export async function clipScheduler() {
     try {
         const { data } = await api({
             url: '/channels/UCzKkwB84Y0ql0EvyOWRSkEw/clips',
@@ -31,9 +46,9 @@ async function clipScheduler() {
             },
         })
         if (before.length) {
-            data.filter(clip => before.every(b => b.id !== clip.id)).forEach(
-                newClip => chatAtDiscord(newClip),
-            )
+            data.filter((clip: Clip) =>
+                before.every((b) => b.id !== clip.id),
+            ).forEach((newClip: Clip) => chatAtDiscord(newClip))
         }
         before = data
     } catch (e) {
@@ -43,11 +58,11 @@ async function clipScheduler() {
     setTimeout(clipScheduler, interval)
 }
 
-module.exports = {
-    relayingClipChannels,
-    clipScheduler,
-    async run(interaction) {
+export default {
+    async run(interaction: CommandInteraction) {
         const { options, channel } = interaction
+        if (!channel) return
+
         const sw = options.getString('switch')
         if (sw) {
             // stop

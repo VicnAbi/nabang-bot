@@ -1,10 +1,11 @@
-const { relayingTlChannels } = require('./relay')
-const { relayingClipChannels } = require('./clips')
-const { observeServices } = require('./comment')
-const client = require('../services/client')
+import { relayingTlChannels } from './relay'
+import { relayingClipChannels } from './clips'
+import { observeServices } from './comment'
+import client from '../services/client'
+import { CommandInteraction } from 'discord.js'
 
-module.exports = {
-    async run(interaction) {
+export default {
+    async run(interaction: CommandInteraction) {
         const guilds = client.guilds.cache.reduce(
             (s, g) =>
                 s +

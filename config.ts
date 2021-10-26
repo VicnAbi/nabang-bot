@@ -1,7 +1,7 @@
-const dotenv = require('dotenv')
+import dotenv from 'dotenv'
 dotenv.config()
 
-module.exports = {
+export default {
     ENV: process.env.NODE_ENV,
     MASTER_ID: process.env.MASTER_ID,
     DISCORD: {
