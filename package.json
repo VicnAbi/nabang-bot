@@ -8,7 +8,8 @@
   "scripts": {
     "register": "ts-node-dev services/register.ts",
     "dev": "ts-node-dev bot.ts",
-    "start": "ts-node bot.ts"
+    "build": "tsc",
+    "start": "node build/bot.js"
   },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
