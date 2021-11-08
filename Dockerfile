@@ -15,6 +15,8 @@ WORKDIR $APP_HOME
 
 COPY --from=builder build build
 COPY --from=builder .env .
+COPY --from=builder package.json .
+COPY --from=builder yarn.lock .
 
 RUN yarn install --production=true
 CMD ["yarn", "start"]
