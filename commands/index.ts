@@ -14,20 +14,19 @@ import status from './status'
 import uwu from './uwu'
 import tl from './tl'
 import clips from './clips'
+import comment from './comment'
+import tag from './tag'
+import reaction from './reaction'
 
 export default {
     status,
     uwu,
     tl,
     clips,
+    comment,
+    tag,
+    reaction,
 } as Commands
-
-// clips: import('./clips'),
-// uwu: import('./uwu'),
-// comment: import('./comment'),
-// tl: import('./tl'),
-// reaction: import('./reaction'),
-// tag: import('./tag'),
 
 export const register = [
     // clips
@@ -114,6 +113,9 @@ export const register = [
         )
         .addStringOption((option) =>
             option.setName('url').setDescription('Video link'),
+        )
+        .addStringOption(option =>
+            option.setName('type').setDescription('type:youtube'),
         ),
     // tl
     new SlashCommandBuilder()

@@ -6,7 +6,7 @@
   "author": "VicnAbi <abivicn@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "register": "node services/register.js",
+    "register": "ts-node-dev services/register.ts",
     "dev": "ts-node-dev bot.ts",
     "start": "node build/bot.js"
   },

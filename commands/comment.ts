@@ -63,7 +63,7 @@ async function check(
     }
 }
 
-module.exports = {
+export default {
     async run(interaction: CommandInteraction) {
         const { options } = interaction
         const url = options.getString('url')

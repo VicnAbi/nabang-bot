@@ -9,6 +9,7 @@ import {
     TextBasedChannels,
 } from 'discord.js'
 import client from '../services/client'
+import youtube from '../services/youtube'
 
 const maxTryCount = 50
 
@@ -27,6 +28,27 @@ function timeFormat(timestamp: number) {
     text += h > 0 ? `${h}h` : ''
     text += m > 0 ? `${m}m` : ''
     text += s > 0 ? `${s}s` : ''
+
+    return text
+}
+
+/**
+ * unix timestamp to youtube format
+ * @param {Number} timestamp
+ * @returns
+ */
+function youtubeTimeFormat(timestamp: number) {
+    let s = Math.floor(timestamp / 1000)
+    let m = Math.floor(s / 60)
+    let h = Math.floor(m / 60)
+
+    s = s % 60
+    m = m % 60
+
+    let text = ''
+    text += h > 0 ? `${h}:` : ''
+    text += m > 9 ? `${m}:` : `0${m}:`
+    text += s > 9 ? `${s}` : `0${s}`
 
     return text
 }
@@ -90,6 +112,7 @@ export default {
         const padding = options.getNumber('padding') || 1
         const start = options.getString('start')!
         const end = options.getString('end')!
+        const renderType = options.getString('type') || ''
 
         try {
             const channel = (await client.channels.fetch(
@@ -117,15 +140,16 @@ export default {
             const txts = messages
                 .filter((m) => m.hasStar)
                 .map((m) => {
-                    const t = timeFormat(m.time - firstTime + padding * 1000)
+                    const t = m.time - firstTime + padding * 1000
                     const link =
                         url === ''
                             ? `https://discord.com/channels/${guildId}/${channel.id}/${m.id}`
                             : `${url}?t=${t}`
-                    return (
-                        (m.isTL ? '[TL] ' : '') +
-                        `${m.content} [${t}](${link})\n`
-                    )
+                    return renderType.toLowerCase() === 'youtube'
+                        ? `${youtubeTimeFormat(t)} ${m.isTL ? '[TL] ' : ''}` +
+                              `${m.content}\n`
+                        : (m.isTL ? '[TL] ' : '') +
+                              `${m.content} [${timeFormat(t)}](${link})\n`
                 })
 
             for (let i = 0; i < txts.length; i += 10) {

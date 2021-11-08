@@ -11,7 +11,7 @@ export const relayingClipChannels = new Set<TextBasedChannels>()
 const interval = 3 * 60 * 1000
 
 type Clip = {
-    id: Snowflake
+    id: string
     title: string
     lang: string
     channel: {
