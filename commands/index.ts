@@ -114,7 +114,7 @@ export const register = [
         .addStringOption((option) =>
             option.setName('url').setDescription('Video link'),
         )
-        .addStringOption(option =>
+        .addStringOption((option) =>
             option.setName('type').setDescription('type:youtube'),
         ),
     // tl

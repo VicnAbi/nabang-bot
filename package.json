@@ -6,7 +6,8 @@
   "author": "VicnAbi <abivicn@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "register": "ts-node-dev services/register.ts",
+    "add-tl": "ts-node-dev scripts/add-tl.ts",
+    "register": "ts-node-dev scripts/register.ts",
     "dev": "ts-node-dev bot.ts",
     "build": "tsc",
     "start": "node build/bot.js"
