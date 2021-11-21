@@ -1,28 +1,13 @@
 import { CommandInteraction, TextBasedChannels } from 'discord.js'
-import twitchService, { TwitchChannel } from '../services/twitch'
 
-export const relayingTlChannels = new Map<TextBasedChannels, string>()
+export const relayingTlChannels = new Set<TextBasedChannels>()
 
-export async function chatAtDiscord(
-    twitch: TwitchChannel,
-    message: string,
-    username: string,
-) {
-    relayingTlChannels.forEach((target, channel) => {
-        if (twitch === target)
-            channel.send({
-                content: `:speech_balloon:||${username}:|| \`${message}\``,
-            })
+export async function chatAtDiscord(message: string, username: string) {
+    relayingTlChannels.forEach((channel) => {
+        channel.send({
+            content: `:speech_balloon:||${username}:|| \`${message}\``,
+        })
     })
-}
-
-export async function connect(
-    channel: TextBasedChannels,
-    target: TwitchChannel,
-) {
-    relayingTlChannels.delete(channel)
-    await twitchService.connect(target)
-    relayingTlChannels.set(channel, target)
 }
 
 export default {
@@ -30,26 +15,15 @@ export default {
         const { options, channel } = interaction
         if (!channel) return
 
-        let target = options.getString('target')
-        if (target === 'stop') {
+        const sw = options.getString('switch')
+        if (sw) {
             // stop
             relayingTlChannels.delete(channel)
             await interaction.reply('tl relay has stopped')
-            return
-        }
-        if (!target) {
-            target = 'nabinya'
-        }
-
-        // start
-        try {
-            await connect(channel, target)
-            await interaction.reply(
-                `tl relay start from https://www.twitch.tv/${target}`,
-            )
-        } catch (e) {
-            console.error(e)
-            await interaction.reply(`connect fail`)
+        } else {
+            // start
+            relayingTlChannels.add(channel)
+            await interaction.reply('start tl relay')
         }
     },
 }

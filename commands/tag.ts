@@ -9,6 +9,7 @@ import {
     TextBasedChannels,
 } from 'discord.js'
 import client from '../services/client'
+import youtube from '../services/youtube'
 
 const maxTryCount = 50
 

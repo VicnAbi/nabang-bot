@@ -1,36 +1,24 @@
+import CONFIG from '../config'
 import { chatAtDiscord } from '../commands/relay'
 const tmi = require('tmi.js')
 
-export type TwitchChannel = string
+const client = new tmi.Client({
+    channels: [CONFIG.TWITCH.CHANNEL],
+})
 
-const clients = new Map<TwitchChannel, any>()
+client.on(
+    'message',
+    (channel: any, tags: { username: any }, message: string, self: any) => {
+        if (self) return
+        if (/^\[en\].*/i.test(message.trim())) {
+            chatAtDiscord(message, tags.username)
+        }
+    },
+)
 
 export default {
-    async connect(twitch: TwitchChannel) {
-        if (clients.get(twitch)) return
-
-        const client = new tmi.Client({
-            channels: [twitch],
-        })
+    async connect() {
         await client.connect()
-        client.on(
-            'message',
-            (
-                channel: any,
-                tags: { username: any },
-                message: string,
-                self: any,
-            ) => {
-                if (self) return
-                if (/^\[en\].*/i.test(message.trim())) {
-                    chatAtDiscord(twitch, message, tags.username)
-                }
-            },
-        )
-        clients.set(twitch, client)
-    },
-    disconnect(twitch: TwitchChannel) {
-        clients.get(twitch).disconnect()
-        clients.delete(twitch)
+        console.log('twitch connected')
     },
 }

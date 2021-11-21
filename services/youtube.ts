@@ -3,7 +3,7 @@ import { chatAtDiscord } from '../commands/relay'
 const YouTube = require('youtube-live-chat')
 
 export default {
-    connect(youtube: string) {
+    connect() {
         return new Promise((resolve, reject) => {
             const yt = new YouTube(
                 CONFIG.YOUTUBE.TARGET,
@@ -19,7 +19,7 @@ export default {
                 const { displayMessage } = snippet
                 const { displayName } = authorDetails
                 if (/^\[(ko|kr)\].*/i.test(displayMessage.trim())) {
-                    chatAtDiscord(youtube, displayMessage, displayName)
+                    chatAtDiscord(displayMessage, displayName)
                 }
             })
         })

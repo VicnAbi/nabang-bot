@@ -16,8 +16,7 @@
 ## /tl relay
 
 `/tl relay` nabinya 트위치 채널에서 영어 번역을 가져옵니다.  
-`/tl relay target:channel` 다른 트위치 채널.  
-`/tl relay target:stop`  
+`/tl relay switch:stop`
 
 ## /tl log
 
