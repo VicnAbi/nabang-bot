@@ -18,7 +18,7 @@ import comment from './comment'
 import tag from './tag'
 import reaction from './reaction'
 
-export default {
+export default <Commands>{
     status,
     uwu,
     tl,
@@ -26,7 +26,7 @@ export default {
     comment,
     tag,
     reaction,
-} as Commands
+}
 
 export const register = [
     // clips
@@ -127,7 +127,9 @@ export const register = [
                 .setName('relay')
                 .setDescription('Brings out the translation of real-time chat.')
                 .addStringOption(option =>
-                    option.setName('switch').setDescription('On/Off switch'),
+                    option
+                        .setName('target')
+                        .setDescription('Target twitch channel or target:stop'),
                 ),
         )
         // tl log

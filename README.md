@@ -16,7 +16,8 @@ Multiple convenience features can be added and it's okay to bring it to your ser
 ## /tl relay
 
 `/tl relay` Brings out the translation of real-time chats from nabinya Twitch.  
-`/tl relay switch:stop`
+`/tl relay target:channel` Other Twitch channel.  
+`/tl relay target:stop`  
 
 ## /tl log
 
