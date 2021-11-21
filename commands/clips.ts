@@ -1,10 +1,5 @@
 import { api } from '../services/holodex'
-import {
-    CommandInteraction,
-    TextBasedChannels,
-    MessageEmbed,
-    Snowflake,
-} from 'discord.js'
+import { CommandInteraction, TextBasedChannels, MessageEmbed } from 'discord.js'
 
 export const relayingClipChannels = new Set<TextBasedChannels>()
 
