@@ -32,8 +32,8 @@ readFile(FILE_PATH, 'utf-8', async (err, data) => {
     // parse
     const lines = data
         .split(/\r?\n/)
-        .filter((_) => _)
-        .map((line) => {
+        .filter(_ => _)
+        .map(line => {
             const matches = line.match(/^(\d+):(\d+):(\d+) ?\((.+?)\) ?(.+)$/)
             if (!matches) {
                 console.error(`parse error: ${line}`)

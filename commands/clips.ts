@@ -31,7 +31,7 @@ async function chatAtDiscord({ id, title, channel, lang }: Clip) {
             'From Holodex clips',
             'https://pbs.twimg.com/profile_images/1374907434523750408/-rlYtfK0_normal.png',
         )
-    relayingClipChannels.forEach((channel) => {
+    relayingClipChannels.forEach(channel => {
         channel.send({ embeds: [embed] })
     })
 }
@@ -47,7 +47,7 @@ export async function clipScheduler() {
         })
         if (before.length) {
             data.filter((clip: Clip) =>
-                before.every((b) => b.id !== clip.id),
+                before.every(b => b.id !== clip.id),
             ).forEach((newClip: Clip) => chatAtDiscord(newClip))
         }
         before = data

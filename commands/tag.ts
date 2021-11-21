@@ -19,7 +19,7 @@ const maxTryCount = 50
 function timeFormat(timestamp: number) {
     let s = Math.floor(timestamp / 1000)
     let m = Math.floor(s / 60)
-    let h = Math.floor(m / 60)
+    const h = Math.floor(m / 60)
 
     s = s % 60
     m = m % 60
@@ -40,7 +40,7 @@ function timeFormat(timestamp: number) {
 function youtubeTimeFormat(timestamp: number) {
     let s = Math.floor(timestamp / 1000)
     let m = Math.floor(s / 60)
-    let h = Math.floor(m / 60)
+    const h = Math.floor(m / 60)
 
     s = s % 60
     m = m % 60
@@ -93,7 +93,7 @@ async function recursiveFetch(
 ): Promise<MsgData[]> {
     const data = await messages.fetch({ limit: 100, before: lastId })
 
-    let isEnd = data.some((m) => {
+    const isEnd = data.some(m => {
         result.push(dataToMsg(m))
         return m.id == endId
     })
@@ -138,8 +138,8 @@ export default {
             })
             const firstTime = messages[0].time
             const txts = messages
-                .filter((m) => m.hasStar)
-                .map((m) => {
+                .filter(m => m.hasStar)
+                .map(m => {
                     const t = m.time - firstTime + padding * 1000
                     const link =
                         url === ''

@@ -20,7 +20,7 @@ const maxTryCount = 50
 function timeFormat(timestamp: number) {
     let s = Math.floor(timestamp / 1000)
     let m = Math.floor(s / 60)
-    let h = Math.floor(m / 60)
+    const h = Math.floor(m / 60)
 
     s = s % 60
     m = m % 60
@@ -67,8 +67,8 @@ function analyzeEmoji(m: MsgData) {
     let text = ''
     let count = 0
     m.reactions
-        .filter((r) => r.emoji.name !== '⭐')
-        .forEach((r) => {
+        .filter(r => r.emoji.name !== '⭐')
+        .forEach(r => {
             text += `<:${r.emoji.name}:${r.emoji.id}>`
             count = count > r.count ? count : r.count
         })
@@ -88,7 +88,7 @@ async function recursiveFetch(
 ): Promise<MsgData[]> {
     const data = await messages.fetch({ limit: 100, before: lastId })
 
-    let isEnd = data.some((m) => {
+    const isEnd = data.some(m => {
         result.push(dataToMsg(m))
         return m.id == endId
     })
@@ -129,19 +129,19 @@ export default {
                 dataToMsg(await channel.messages.fetch(end)),
                 ...(await recursiveFetch(channel.messages, end, start)),
             ]
-                .filter((m) => m.isTL)
+                .filter(m => m.isTL)
                 .sort((a, b) => {
                     return a.time - b.time
                 })
             const firstTime = tlMessages[0].time
             const messages = tlMessages
-                .map((m) => {
+                .map(m => {
                     m.time = m.time - firstTime + padding * 1000
                     return analyzeEmoji(m)
                 })
-                .filter((m) => m.reaction.count > 1)
+                .filter(m => m.reaction.count > 1)
 
-            const txts = messages.map((m) => {
+            const txts = messages.map(m => {
                 const t = timeFormat(m.time)
                 const link =
                     url === ''

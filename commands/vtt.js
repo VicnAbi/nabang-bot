@@ -36,7 +36,7 @@ function dataToMsg(m) {
 async function recursiveFetch(messages, lastId, endId, result = [], count = 0) {
     const data = await messages.fetch({ limit: 100, before: lastId })
 
-    let isEnd = data.some((m) => {
+    let isEnd = data.some(m => {
         result.push(dataToMsg(m))
         return m.id == endId
     })

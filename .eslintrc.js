@@ -3,13 +3,14 @@ module.exports = {
         es6: true,
         node: true,
     },
-    extends: ['eslint:recommended', 'prettier', 'plugin:prettier/recommended'],
-    parserOptions: {
-        parser: 'babel-eslint',
-        ecmaVersion: 2020,
-        sourceType: 'module',
-    },
-    plugins: ['prettier'],
+    parser: '@typescript-eslint/parser',
+    plugins: ['prettier', '@typescript-eslint'],
+    extends: [
+        'eslint:recommended',
+        'prettier',
+        'plugin:prettier/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+    ],
     rules: {
         'prettier/prettier': [
             'error',

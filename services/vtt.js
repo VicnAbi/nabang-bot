@@ -39,7 +39,7 @@ Language: en
 
 NOTE ${title}
 `
-    messages.forEach((m) => {
+    messages.forEach(m => {
         const time = m.time - startTime + padding * 1000
         vttText += `
 ${timeFormat(lastTime)} --> ${timeFormat(time)}

@@ -33,88 +33,88 @@ export const register = [
     new SlashCommandBuilder()
         .setName('clips')
         .setDescription('Brings out the new clips.')
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option.setName('switch').setDescription('On/Off switch'),
         ),
     // uwu
     new SlashCommandBuilder()
         .setName('uwu')
         .setDescription('UwU')
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option.setName('input').setDescription('text to uwu'),
         ),
     // comment
     new SlashCommandBuilder()
         .setName('comment')
         .setDescription('Observe Youtube comments')
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option.setName('url').setDescription('youtube url'),
         ),
     // reaction
     new SlashCommandBuilder()
         .setName('reaction')
         .setDescription('Summarize the TLs that received reactions')
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option
                 .setName('channel')
                 .setDescription('stream chat channelId')
                 .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option
                 .setName('start')
                 .setDescription('start chatId')
                 .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option
                 .setName('end')
                 .setDescription('end chatId')
                 .setRequired(true),
         )
-        .addNumberOption((option) =>
+        .addNumberOption(option =>
             option
                 .setName('padding')
                 .setDescription(
                     'The difference between the beginning of the stream and the first TL (secoends)',
                 ),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option.setName('url').setDescription('Video link'),
         ),
     // tag
     new SlashCommandBuilder()
         .setName('tag')
         .setDescription('Generate tag list')
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option
                 .setName('channel')
                 .setDescription('stream chat channelId')
                 .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option
                 .setName('start')
                 .setDescription('start chatId')
                 .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option
                 .setName('end')
                 .setDescription('end chatId')
                 .setRequired(true),
         )
-        .addNumberOption((option) =>
+        .addNumberOption(option =>
             option
                 .setName('padding')
                 .setDescription(
                     'The difference between the beginning of the stream and the first tag (secoends)',
                 ),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option.setName('url').setDescription('Video link'),
         )
-        .addStringOption((option) =>
+        .addStringOption(option =>
             option.setName('type').setDescription('type:youtube'),
         ),
     // tl
@@ -126,7 +126,7 @@ export const register = [
             new SlashCommandSubcommandBuilder()
                 .setName('relay')
                 .setDescription('Brings out the translation of real-time chat.')
-                .addStringOption((option) =>
+                .addStringOption(option =>
                     option.setName('switch').setDescription('On/Off switch'),
                 ),
         )
@@ -135,19 +135,19 @@ export const register = [
             new SlashCommandSubcommandBuilder()
                 .setName('log')
                 .setDescription('Save TLs like LunaTL log')
-                .addStringOption((option) =>
+                .addStringOption(option =>
                     option
                         .setName('start')
                         .setDescription('start chatId')
                         .setRequired(true),
                 )
-                .addStringOption((option) =>
+                .addStringOption(option =>
                     option
                         .setName('end')
                         .setDescription('end chatId')
                         .setRequired(true),
                 )
-                .addNumberOption((option) =>
+                .addNumberOption(option =>
                     option
                         .setName('padding')
                         .setDescription(
@@ -155,4 +155,4 @@ export const register = [
                         ),
                 ),
         ),
-].map((command) => command.toJSON())
+].map(command => command.toJSON())
