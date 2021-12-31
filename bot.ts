@@ -13,15 +13,17 @@ client.once('ready', async () => {
     try {
         // await youtube.connect()
 
+        const channels = {
+            nabiStreamChat: await client.channels.fetch('831529891488727040'),
+            liveTranslation: await client.channels.fetch('860458602317611029'),
+            nabiClips: await client.channels.fetch('831540702537187328'),
+        } as { [key: string]: TextBasedChannels | null }
+
         // initTlChannels
-        ;[
-            await client.channels.fetch('831529891488727040'),
-            await client.channels.fetch('860458602317611029'),
-        ].forEach(channel => connect(channel as TextBasedChannels, 'nabinya'))
+        await connect(channels.nabiStreamChat!, 'nabinya')
+        await connect(channels.liveTranslation!, 'nabinya')
         // initClipChannels
-        ;[await client.channels.fetch('831540702537187328')].forEach(channel =>
-            relayingClipChannels.add(channel as TextBasedChannels),
-        )
+        relayingClipChannels.add(channels.nabiClips!)
 
         clipScheduler()
         console.log('Ready!')
