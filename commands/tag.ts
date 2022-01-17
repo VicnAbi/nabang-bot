@@ -117,7 +117,7 @@ export default {
             const channel = (await client.channels.fetch(
                 channelId,
             )) as TextBasedChannels
-            const startLink = `https://discord.com/channels/${guildId}/${channel.id}/${start}`
+            const startLink = `https://discord.com/channels/${guildId}/${channelId}/${start}`
             const row = new MessageActionRow().addComponents(
                 new MessageButton()
                     .setStyle('LINK')
@@ -142,7 +142,7 @@ export default {
                     const t = m.time - firstTime + padding * 1000
                     const link =
                         url === ''
-                            ? `https://discord.com/channels/${guildId}/${channel.id}/${m.id}`
+                            ? `https://discord.com/channels/${guildId}/${channelId}/${m.id}`
                             : `${url}?t=${t}`
                     return renderType.toLowerCase() === 'youtube'
                         ? `${youtubeTimeFormat(t)} ${m.isTL ? '[TL] ' : ''}` +

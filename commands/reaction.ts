@@ -113,7 +113,7 @@ export default {
                 channelId,
             )) as TextBasedChannels
 
-            const startLink = `https://discord.com/channels/${guildId}/${channel.id}/${start}`
+            const startLink = `https://discord.com/channels/${guildId}/${channelId}/${start}`
             const row = new MessageActionRow().addComponents(
                 new MessageButton()
                     .setStyle('LINK')
@@ -145,7 +145,7 @@ export default {
                 const t = timeFormat(m.time)
                 const link =
                     url === ''
-                        ? `https://discord.com/channels/${guildId}/${channel.id}/${m.id}`
+                        ? `https://discord.com/channels/${guildId}/${channelId}/${m.id}`
                         : `${url}?t=${t}`
                 return `${m.content} ${m.reaction.text}(${m.reaction.count}) [${t}](${link})\n`
             })
