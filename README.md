@@ -1,5 +1,9 @@
 # nabang-bot
 
+---
+It is no longer managed. If you would like to relocate, please email abivicn@gmail.com.
+---
+
 discord bot
 
 [한국어 가이드](./README-ko.md)  
